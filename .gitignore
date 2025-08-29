@@ -1,0 +1,15 @@
+# Ignore the database file
+data/cta_database.db
+
+# Ignore secret API keys
+.env
+
+# Ignore MLflow experiment tracking artifacts
+mlruns/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/

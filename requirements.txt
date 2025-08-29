@@ -1,0 +1,42 @@
+# requirements.txt
+
+# --- Core Data Science & EDA ---
+# For data manipulation, numerical operations, and analysis in notebook
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+jupyterlab
+geopandas
+
+# --- Data Acquisition & Storage ---
+# For making API calls and parsing GTFS-RT protocol buffers
+requests
+gtfs-realtime-bindings
+# For connecting to PostgreSQL databases
+psycopg2-binary
+sqlalchemy
+
+# --- ML Modeling & Experiment Tracking ---
+# Deep learning framework and MLOps tracking tool
+tensorflow
+mlflow
+
+# --- Backend API Server ---
+# For creating and serving the model's API endpoint
+fastapi
+uvicorn[standard] # ASGI server to run FastAPI
+
+# --- Frontend Dashboard (Optional) ---
+streamlit
+gradio
+folium # For creating maps
+
+# --- Utilities ---
+# For managing environment variables (like API keys) and testing
+python-dotenv
+pytest
+
+
+
