@@ -1,0 +1,62 @@
+2025-09-01 20:50:03,915 - INFO - Database setup complete.
+2025-09-01 20:50:03,915 - INFO - Starting data collection with 60s intervals
+2025-09-01 20:50:03,915 - INFO - Press Ctrl+C to stop gracefully
+2025-09-01 20:50:03,915 - INFO - --- Fetching data at 2025-09-01 20:50:03.915463 ---
+2025-09-01 20:50:05,844 - INFO - Successfully saved data for 71 trains to the database.
+2025-09-01 20:50:05,845 - INFO - Processed 71 records, 0 invalid
+2025-09-01 20:50:05,845 - INFO - Data quality rate: 100.00%
+2025-09-01 20:50:05,845 - INFO - Waiting for 60 seconds...
+2025-09-01 20:51:05,852 - INFO - --- Fetching data at 2025-09-01 20:51:05.850660 ---
+2025-09-01 20:51:07,175 - INFO - Successfully saved data for 71 trains to the database.
+2025-09-01 20:51:07,175 - INFO - Processed 72 records, 1 invalid
+2025-09-01 20:51:07,176 - INFO - Data quality rate: 98.61%
+2025-09-01 20:51:07,176 - INFO - Waiting for 60 seconds...
+2025-09-01 20:51:31,406 - INFO - Gracefully shutting down...
+2025-09-01 20:52:39,372 - INFO - Database setup complete.
+2025-09-01 20:52:39,372 - INFO - Starting data collection with 60s intervals
+2025-09-01 20:52:39,372 - INFO - Press Ctrl+C to stop gracefully
+2025-09-01 20:52:39,372 - INFO - --- Fetching data at 2025-09-01 20:52:39.372523 ---
+2025-09-01 20:52:40,559 - INFO - Successfully saved data for 69 trains to the database.
+2025-09-01 20:52:40,559 - INFO - Processed 69 records, 0 invalid
+2025-09-01 20:52:40,560 - INFO - Data quality rate: 100.00%
+2025-09-01 20:52:40,560 - INFO - Waiting for 60 seconds...
+2025-09-01 20:53:40,564 - INFO - --- Fetching data at 2025-09-01 20:53:40.562728 ---
+2025-09-01 20:53:41,902 - INFO - Successfully saved data for 67 trains to the database.
+2025-09-01 20:53:41,903 - INFO - Processed 67 records, 0 invalid
+2025-09-01 20:53:41,903 - INFO - Data quality rate: 100.00%
+2025-09-01 20:53:41,903 - INFO - Waiting for 60 seconds...
+2025-09-01 20:54:41,908 - INFO - --- Fetching data at 2025-09-01 20:54:41.907727 ---
+2025-09-01 20:54:43,229 - INFO - Successfully saved data for 68 trains to the database.
+2025-09-01 20:54:43,230 - INFO - Processed 68 records, 0 invalid
+2025-09-01 20:54:43,230 - INFO - Data quality rate: 100.00%
+2025-09-01 20:54:43,230 - INFO - Waiting for 60 seconds...
+2025-09-01 20:55:43,236 - INFO - --- Fetching data at 2025-09-01 20:55:43.234923 ---
+2025-09-01 20:55:44,465 - INFO - Successfully saved data for 71 trains to the database.
+2025-09-01 20:55:44,466 - INFO - Processed 71 records, 0 invalid
+2025-09-01 20:55:44,466 - INFO - Data quality rate: 100.00%
+2025-09-01 20:55:44,466 - INFO - Waiting for 60 seconds...
+2025-09-01 20:56:44,469 - INFO - --- Fetching data at 2025-09-01 20:56:44.469231 ---
+2025-09-01 20:56:47,846 - INFO - Successfully saved data for 73 trains to the database.
+2025-09-01 20:56:47,847 - INFO - Processed 73 records, 0 invalid
+2025-09-01 20:56:47,847 - INFO - Data quality rate: 100.00%
+2025-09-01 20:56:47,847 - INFO - Waiting for 60 seconds...
+2025-09-01 20:57:47,904 - INFO - --- Fetching data at 2025-09-01 20:57:47.885863 ---
+2025-09-01 20:57:49,422 - INFO - Successfully saved data for 72 trains to the database.
+2025-09-01 20:57:49,423 - INFO - Processed 72 records, 0 invalid
+2025-09-01 20:57:49,423 - INFO - Data quality rate: 100.00%
+2025-09-01 20:57:49,423 - INFO - Waiting for 60 seconds...
+2025-09-01 20:58:49,390 - INFO - --- Fetching data at 2025-09-01 20:58:49.390000 ---
+2025-09-01 20:59:01,249 - INFO - Successfully saved data for 73 trains to the database.
+2025-09-01 20:59:01,250 - INFO - Processed 73 records, 0 invalid
+2025-09-01 20:59:01,250 - INFO - Data quality rate: 100.00%
+2025-09-01 20:59:01,250 - INFO - Waiting for 60 seconds...
+2025-09-01 21:00:01,251 - INFO - --- Fetching data at 2025-09-01 21:00:01.250970 ---
+2025-09-01 21:00:02,686 - INFO - Successfully saved data for 72 trains to the database.
+2025-09-01 21:00:02,686 - INFO - Processed 72 records, 0 invalid
+2025-09-01 21:00:02,686 - INFO - Data quality rate: 100.00%
+2025-09-01 21:00:02,686 - INFO - Waiting for 60 seconds...
+2025-09-01 21:01:02,689 - INFO - --- Fetching data at 2025-09-01 21:01:02.689009 ---
+2025-09-01 21:01:10,438 - INFO - Successfully saved data for 74 trains to the database.
+2025-09-01 21:01:10,439 - INFO - Processed 74 records, 0 invalid
+2025-09-01 21:01:10,439 - INFO - Data quality rate: 100.00%
+2025-09-01 21:01:10,439 - INFO - Waiting for 60 seconds...

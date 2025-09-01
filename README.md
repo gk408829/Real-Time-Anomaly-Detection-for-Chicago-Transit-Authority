@@ -249,17 +249,18 @@ This timeline provides an ambitious but achievable weekly breakdown for completi
     3. Online Adaptation: Maintain a rolling calibration buffer for the conformal predictor.
 
     4. API Endpoints: Create a `/predict` endpoint that returns a JSON object: 
-    ```
-    {
-        "is_anomaly": true, 
-        "p_value": 0.02, 
-        "severity_score": 0.98, 
-        "explanation": {
-            "feature1": 0.5, 
-            "feature2": -0.2
-            }
-    }.
-    ```
+    
+        ```
+        {
+            "is_anomaly": true, 
+            "p_value": 0.02, 
+            "severity_score": 0.98, 
+            "explanation": {
+                "feature1": 0.5, 
+                "feature2": -0.2
+                }
+        }.
+        ```
 
     5. Containerization: Write a `Dockerfile` to package the application.
 
