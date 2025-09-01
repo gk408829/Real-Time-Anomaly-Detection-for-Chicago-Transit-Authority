@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # CTA Anomaly Detection API
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: cta-anomaly-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - PYTHONPATH=/app
+    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  # Streamlit Dashboard
+  dashboard:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dashboard
+    container_name: cta-anomaly-dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - PYTHONPATH=/app
+      - API_BASE_URL=http://api:8000
+    command: ["streamlit", "run", "dashboard.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Data Collection Service
+  data-collector:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: cta-data-collector
+    volumes:
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+    command: ["python", "fetch_data.py"]
+    restart: unless-stopped
+    depends_on:
+      - api
+
+volumes:
+  cta_data:
+    driver: local
+  cta_models:
+    driver: local
+
+networks:
+  default:
+    name: cta-anomaly-network

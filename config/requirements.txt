@@ -6,6 +6,7 @@ pandas
 numpy
 matplotlib
 seaborn
+plotly
 scikit-learn
 jupyterlab
 geopandas
