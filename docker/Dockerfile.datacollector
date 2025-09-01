@@ -1,0 +1,36 @@
+# Dockerfile for scheduled data collection
+FROM python:3.10-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies including cron
+RUN apt-get update && apt-get install -y \
+    cron \
+    curl \
+    sqlite3 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first for better caching
+COPY config/requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Create necessary directories
+RUN mkdir -p data src
+
+# Copy source code
+COPY src/ ./src/
+
+# Set Python path
+ENV PYTHONPATH=/app
+
+# Create cron job for data collection (runs every hour)
+RUN echo "0 * * * * cd /app && python src/data_collection/fetch_data.py >> /var/log/cron.log 2>&1" | crontab -
+
+# Create log file
+RUN touch /var/log/cron.log
+
+# Start cron and tail the log
+CMD cron && tail -f /var/log/cron.log

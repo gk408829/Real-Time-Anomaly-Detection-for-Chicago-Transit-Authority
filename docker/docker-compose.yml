@@ -10,11 +10,11 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ../data:/app/data
+      - ../data:/app/data:ro
       - ../models:/app/models
     environment:
       - PYTHONPATH=/app
-    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    command: ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
@@ -32,18 +32,18 @@ services:
     ports:
       - "8501:8501"
     volumes:
-      - ../data:/app/data
-      - ../models:/app/models
+      - ../data:/app/data:ro
+      - ../models:/app/models:ro
     environment:
       - PYTHONPATH=/app
       - API_BASE_URL=http://api:8000
-    command: ["streamlit", "run", "dashboard.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
+    command: ["streamlit", "run", "src/dashboard/dashboard.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
     depends_on:
       api:
         condition: service_healthy
     restart: unless-stopped
 
-  # Data Collection Service
+  # Data Collection Service (runs as cron job)
   data-collector:
     build:
       context: ..
@@ -53,16 +53,10 @@ services:
       - ../data:/app/data
     environment:
       - PYTHONPATH=/app
-    command: ["python", "fetch_data.py"]
-    restart: unless-stopped
-    depends_on:
-      - api
-
-volumes:
-  cta_data:
-    driver: local
-  cta_models:
-    driver: local
+    command: ["python", "src/data_collection/fetch_data.py"]
+    restart: "no"
+    profiles:
+      - data-collection
 
 networks:
   default:

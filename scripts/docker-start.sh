@@ -12,14 +12,18 @@ fi
 
 # Check if models exist
 if [ ! -f "models/best_anomaly_model.pkl" ]; then
-    echo "Warning: Model file not found. You may need to train the model first."
-    echo "   Run the modeling notebook (02-Modeling.ipynb) to create the model."
+    echo "ℹ️  Model file not found. API will run in mock mode."
+    echo "   To use real predictions, train the model using 02-Modeling.ipynb"
+else
+    echo "✅ Model file found. API will use trained model."
 fi
 
 # Check if database exists
 if [ ! -f "data/cta_database.db" ]; then
-    echo "Warning: Database not found. Starting data collection..."
-    echo "   The data collector will create the database automatically."
+    echo "ℹ️  Database not found. Run data collection to create it:"
+    echo "   python src/data_collection/fetch_data.py"
+else
+    echo "✅ Database found."
 fi
 
 # Build and start services
@@ -47,6 +51,11 @@ echo "   API Docs:  http://localhost:8000/docs"
 echo ""
 echo "📝 Useful commands:"
 echo "   View logs:     docker-compose -f docker/docker-compose.yml logs -f"
-echo "   Stop system:   docker-compose -f docker/docker-compose.yml down"
+echo "   Stop system:   ./scripts/docker-stop.sh"
 echo "   Restart:       docker-compose -f docker/docker-compose.yml restart"
+echo "   Check health:  curl http://localhost:8000/health"
+echo ""
+echo "🔧 Development:"
+echo "   Train model:   Open and run notebooks/02-Modeling.ipynb"
+echo "   Collect data:  python src/data_collection/fetch_data.py"
 echo ""

@@ -177,7 +177,21 @@ docs/build/
 ehthumbs.db
 Thumbs.db
 
-# Project specific
-# Uncomment if you want to ignore specific data or model files
+# Project specific data and artifacts
+data/cta_database.db
+data/*.db
+data/*.sqlite*
+models/*.pkl
+models/*.joblib
+mlruns/
+mlartifacts/
+
+# Keep structure but ignore contents
+data/archive/*
+!data/archive/.gitkeep
+models/checkpoints/*
+!models/checkpoints/.gitkeep
+
+# Optional: Uncomment to ignore geo data and write-ups
 # geo_data/
 # write-ups/

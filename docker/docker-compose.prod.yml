@@ -7,15 +7,15 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     container_name: cta-anomaly-api-prod
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     volumes:
-      - cta_data:/app/data
+      - cta_data:/app/data:ro
       - cta_models:/app/models
     environment:
       - PYTHONPATH=/app
       - ENVIRONMENT=production
-    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
+    command: ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
@@ -35,15 +35,16 @@ services:
       context: ..
       dockerfile: docker/Dockerfile.dashboard
     container_name: cta-anomaly-dashboard-prod
-    ports:
-      - "8501:8501"
+    expose:
+      - "8501"
     volumes:
-      - cta_data:/app/data
-      - cta_models:/app/models
+      - cta_data:/app/data:ro
+      - cta_models:/app/models:ro
     environment:
       - PYTHONPATH=/app
       - API_BASE_URL=http://api:8000
       - ENVIRONMENT=production
+    command: ["streamlit", "run", "src/dashboard/dashboard.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
     depends_on:
       api:
         condition: service_healthy
@@ -54,7 +55,7 @@ services:
           memory: 512M
           cpus: '0.25'
 
-  # Data Collection Service (runs periodically)
+  # Data Collection Service (scheduled via cron)
   data-collector:
     build:
       context: ..
@@ -65,17 +66,17 @@ services:
     environment:
       - PYTHONPATH=/app
       - ENVIRONMENT=production
-    command: ["python", "fetch_data.py"]
-    restart: always
-    depends_on:
-      - api
+    command: ["python", "src/data_collection/fetch_data.py"]
+    restart: "no"
+    profiles:
+      - data-collection
     deploy:
       resources:
         limits:
           memory: 256M
           cpus: '0.1'
 
-  # Nginx reverse proxy (optional)
+  # Nginx reverse proxy
   nginx:
     image: nginx:alpine
     container_name: cta-nginx-prod

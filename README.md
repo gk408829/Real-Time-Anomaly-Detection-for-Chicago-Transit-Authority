@@ -18,6 +18,11 @@ The system provides both an API for programmatic access and a web dashboard for 
 - Docker and Docker Compose installed
 - Internet connection for CTA API access
 
+### Verify Setup
+```bash
+./scripts/verify-setup.sh
+```
+
 ### One-Command Setup
 ```bash
 ./scripts/docker-start.sh
@@ -25,13 +30,13 @@ The system provides both an API for programmatic access and a web dashboard for 
 
 This will:
 - Build all Docker containers
-- Start the API, dashboard, and data collector services
-- Begin collecting live CTA data
+- Start the API and dashboard services
+- The API runs in safe mode (mock predictions) if no trained model is available
 
 ### Access the System
-- **Dashboard**: http://localhost:8501 - Interactive map and visualizations
 - **API**: http://localhost:8000 - REST API for predictions
 - **API Docs**: http://localhost:8000/docs - Interactive API documentation
+- **Dashboard**: http://localhost:8501 - Interactive map and visualizations
 
 ### Stop the System
 ```bash
@@ -127,16 +132,31 @@ graph TB
 transit_anomaly/
 ├── src/                             # Source code
 │   ├── api/                         # FastAPI service
+│   │   └── app.py                   # Main API application
 │   ├── dashboard/                   # Streamlit dashboard
+│   │   └── dashboard.py             # Dashboard application
 │   ├── data_collection/             # CTA data fetcher
+│   │   └── fetch_data.py            # Data collection script
 │   └── notebooks/                   # Analysis notebooks
+│       ├── 01-EDA.ipynb             # Exploratory data analysis
+│       └── 02-Modeling.ipynb        # Model training
 ├── docker/                          # Docker configuration
+│   ├── docker-compose.yml           # Main services
+│   ├── docker-compose.prod.yml      # Production setup
+│   ├── Dockerfile                   # API container
+│   ├── Dockerfile.dashboard         # Dashboard container
+│   └── Dockerfile.datacollector     # Data collector container
 ├── docs/                            # Documentation
 ├── tests/                           # Test files
 ├── config/                          # Configuration
+│   ├── requirements.txt             # Python dependencies
+│   └── requirements-core.txt        # Core dependencies only
 ├── scripts/                         # Utility scripts
-├── data/                            # Data storage
-└── models/                          # ML model artifacts
+│   ├── docker-start.sh              # Start all services
+│   └── docker-stop.sh               # Stop all services
+├── data/                            # Data storage (SQLite database)
+├── models/                          # ML model artifacts
+└── geo_data/                        # Geographic data files
 ```
 
 ## Development
@@ -148,7 +168,7 @@ pip install -r config/requirements.txt
 
 # Run individual components
 python src/data_collection/fetch_data.py
-python src/api/start_api.py
+uvicorn src.api.app:app --host 0.0.0.0 --port 8000 --reload
 streamlit run src/dashboard/dashboard.py
 ```
 
@@ -166,17 +186,25 @@ Explore the Jupyter notebooks in `src/notebooks/`:
 ## Configuration
 
 ### Environment Variables
-Create a `.env` file in the project root:
+Create a `.env` file in the project root (optional):
 ```bash
+# CTA API key (if you have one - not required for mock mode)
 CTA_API_KEY=your_api_key_here
+
+# API configuration
 API_BASE_URL=http://localhost:8000
 ENVIRONMENT=development
+
+# Python path for development
+PYTHONPATH=/path/to/transit_anomaly
 ```
 
 ### Docker Configuration
-- `docker/docker-compose.yml` - Development environment
-- `docker/docker-compose.prod.yml` - Production environment
-- `docker/nginx.conf` - Reverse proxy configuration
+- `docker/docker-compose.yml` - Main development environment
+- `docker/docker-compose.prod.yml` - Production environment with nginx
+- `docker/Dockerfile` - API service container
+- `docker/Dockerfile.dashboard` - Dashboard service container
+- `docker/nginx.conf` - Reverse proxy configuration for production
 
 ## Model Performance
 
@@ -208,8 +236,9 @@ The system is designed for easy deployment to:
 
 ## Documentation
 
+- [Docker Status](docs/DOCKER_STATUS.md) - Current Docker setup status and troubleshooting
 - [Docker Setup Guide](docs/DOCKER_SETUP.md) - Detailed Docker configuration
-- [Project Plan](PROJECT_PLAN.md) - Original project specification
+- [Project Plan](PROJECT_PLAN.md) - Original project specification and technical details
 
 ## Contributing
 

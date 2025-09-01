@@ -1,43 +1,44 @@
-# requirements.txt
+# CTA Anomaly Detection System - Requirements
+# Production-ready dependencies for the complete system
 
-# --- Core Data Science & EDA ---
-# For data manipulation, numerical operations, and analysis in notebook
-pandas
-numpy
-matplotlib
-seaborn
-plotly
-scikit-learn
-jupyterlab
-geopandas
+# Core Data Science
+pandas>=1.5.0
+numpy>=1.21.0
+scikit-learn>=1.1.0
+joblib>=1.2.0
 
-# --- Data Acquisition & Storage ---
-# For making API calls and parsing GTFS-RT protocol buffers
-requests
-gtfs-realtime-bindings
-# For connecting to PostgreSQL databases
-psycopg2-binary
-sqlalchemy
+# Data Acquisition & Storage
+requests>=2.28.0
+python-dotenv>=0.19.0
+sqlalchemy>=1.4.0
 
-# --- ML Modeling & Experiment Tracking ---
-# Deep learning framework and MLOps tracking tool
-tensorflow
-mlflow
+# Machine Learning
+lightgbm>=3.3.0
+mlflow>=2.0.0
 
-# --- Backend API Server ---
-# For creating and serving the model's API endpoint
-fastapi
-uvicorn[standard] # ASGI server to run FastAPI
+# Web Framework & API
+fastapi>=0.95.0
+uvicorn[standard]>=0.20.0
 
-# --- Frontend Dashboard (Optional) ---
-streamlit
-gradio
-folium # For creating maps
+# Dashboard & Visualization
+streamlit>=1.20.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+plotly>=5.10.0
+folium>=0.14.0
 
-# --- Utilities ---
-# For managing environment variables (like API keys) and testing
-python-dotenv
-pytest
+# Geospatial Analysis
+geopandas>=0.12.0
+shapely>=1.8.0
+
+# Development & Testing
+jupyterlab>=3.4.0
+pytest>=7.0.0
+
+# Optional: Advanced ML (uncomment if needed)
+# tensorflow>=2.10.0
+# gtfs-realtime-bindings>=0.0.7
+# psycopg2-binary>=2.9.0
 
 
 

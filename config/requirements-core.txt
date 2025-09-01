@@ -1,0 +1,8 @@
+# Core dependencies - install first
+numpy
+pandas
+requests
+python-dotenv
+joblib
+scikit-learn
+lightgbm
