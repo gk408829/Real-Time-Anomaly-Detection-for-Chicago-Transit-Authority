@@ -8,22 +8,21 @@ All notable changes to the CTA Anomaly Detection System project.
 
 #### Removed
 - **Duplicate API files**: Removed `app_mock.py`, `app_safe.py`, and `start_api.py` - consolidated into single `app.py`
-- **Fragmented requirements**: Removed individual requirements files (`requirements-*.txt`) - consolidated into single `requirements.txt`
 - **Unnecessary Docker files**: Removed `Dockerfile.minimal`, `docker-compose.dev.yml`, and `build-options.sh`
 - **System files**: Cleaned up `.DS_Store` files throughout the project
 - **Redundant scripts**: Simplified Docker management scripts
 
 #### Updated
 - **README.md**: Updated with current project structure and accurate setup instructions
-- **requirements.txt**: Consolidated all dependencies with version specifications
-- **Docker configuration**: Simplified to essential files only
+- **Requirements management**: Maintained layered requirements files for Docker (timeout prevention) + consolidated file for local development
+- **Docker configuration**: Fixed Dockerfiles to use proper layered installation approach
 - **Scripts**: Updated `docker-start.sh` and `docker-test.sh` for current setup
 - **Documentation**: Updated Docker status and setup guides
 
 #### Improved
 - **Project structure**: Cleaner, more maintainable file organization
-- **Dependencies**: Single source of truth for all Python requirements
-- **Docker setup**: Simplified deployment with fewer configuration files
+- **Dependencies**: Dual approach - layered files for Docker builds (prevents timeouts) + consolidated file for local development
+- **Docker setup**: Fixed build issues and removed obsolete version warnings
 - **Documentation**: More accurate and up-to-date instructions
 
 ### 🔧 Technical Changes

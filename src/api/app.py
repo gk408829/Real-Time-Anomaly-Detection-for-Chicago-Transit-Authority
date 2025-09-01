@@ -59,6 +59,7 @@ class PredictionResponse(BaseModel):
     model_used: str = Field(..., description="Name of the model used for prediction")
     timestamp: str = Field(..., description="Prediction timestamp")
     mock_prediction: bool = Field(..., description="Whether this is a mock prediction")
+    input_features: dict = Field(..., description="Input features used for prediction")
 
 def try_load_model():
     """Try to load the trained model, fall back to mock mode if it fails"""
@@ -129,7 +130,8 @@ def mock_prediction(train_data: TrainData) -> PredictionResponse:
         confidence_score=0.8,  # Mock confidence
         model_used="MockModel",
         timestamp=datetime.now().isoformat(),
-        mock_prediction=True
+        mock_prediction=True,
+        input_features=train_data.dict()
     )
 
 @app.on_event("startup")
@@ -217,13 +219,42 @@ async def predict_anomaly(train_data: TrainData):
             confidence_score=confidence_score,
             model_used=type(model).__name__,
             timestamp=datetime.now().isoformat(),
-            mock_prediction=False
+            mock_prediction=False,
+            input_features=train_data.dict()
         )
         
     except Exception as e:
         logger.error(f"Prediction error: {str(e)}")
         # Fall back to mock on any error
         return mock_prediction(train_data)
+
+@app.get("/model/info")
+async def get_model_info():
+    """Get model information and performance metrics"""
+    if MOCK_MODE or model is None:
+        return {
+            "model_type": "MockModel",
+            "features": ["speed_kmh", "hour_of_day", "day_of_week", "is_delayed", "heading", "latitude", "longitude", "is_weekend", "is_rush_hour", "route_encoded"],
+            "performance": {
+                "auc_roc": 0.85,
+                "precision": 0.80,
+                "recall": 0.75,
+                "f1_score": 0.77
+            },
+            "mock_mode": True
+        }
+    
+    return {
+        "model_type": type(model).__name__,
+        "features": features,
+        "performance": performance_metrics,
+        "mock_mode": False
+    }
+
+@app.get("/routes")
+async def get_supported_routes():
+    """Get list of supported CTA routes"""
+    return ["red", "blue", "brn", "g", "org", "p", "pink", "y"]
 
 @app.get("/test")
 async def test_endpoint():

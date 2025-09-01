@@ -1,0 +1,4 @@
+# Web framework dependencies
+fastapi>=0.95.0
+uvicorn[standard]>=0.20.0
+streamlit>=1.20.0

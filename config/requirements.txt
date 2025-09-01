@@ -1,5 +1,9 @@
 # CTA Anomaly Detection System - Requirements
 # Production-ready dependencies for the complete system
+# 
+# Note: For Docker builds, individual requirements-*.txt files are used
+# to install dependencies in layers and avoid timeout issues.
+# This file is for local development and documentation.
 
 # Core Data Science
 pandas>=1.5.0

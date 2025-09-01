@@ -4,7 +4,7 @@ FROM python:3.10-slim
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies and clean up in same layer to reduce size
 RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
@@ -12,7 +12,10 @@ RUN apt-get update && apt-get install -y \
     sqlite3 \
     libgdal-dev \
     libspatialindex-dev \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/* \
+    && rm -rf /var/tmp/*
 
 # Copy requirements files for better caching
 COPY config/requirements-core.txt config/requirements-web.txt config/requirements-data.txt config/requirements-ml.txt ./
@@ -20,17 +23,15 @@ COPY config/requirements-core.txt config/requirements-web.txt config/requirement
 # Upgrade pip first
 RUN pip install --upgrade pip
 
-# Install core dependencies first
-RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-core.txt
-
-# Install web framework dependencies
-RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-web.txt
-
-# Install data dependencies
-RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-data.txt
-
-# Install ML dependencies
-RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-ml.txt
+# Install dependencies in layers to avoid timeouts
+RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-core.txt \
+    && rm -rf ~/.cache/pip/*
+RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-web.txt \
+    && rm -rf ~/.cache/pip/*
+RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-data.txt \
+    && rm -rf ~/.cache/pip/*
+RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-ml.txt \
+    && rm -rf ~/.cache/pip/*
 
 # Create necessary directories
 RUN mkdir -p models data src

@@ -17,16 +17,10 @@ COPY config/requirements-core.txt config/requirements-web.txt config/requirement
 # Upgrade pip first
 RUN pip install --upgrade pip
 
-# Install core dependencies first
+# Install dependencies in layers to avoid timeouts
 RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-core.txt
-
-# Install web framework dependencies
 RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-web.txt
-
-# Install visualization dependencies
 RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-viz.txt
-
-# Install geospatial dependencies
 RUN pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements-geo.txt
 
 # Create necessary directories

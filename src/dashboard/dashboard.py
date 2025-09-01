@@ -28,7 +28,8 @@ st.set_page_config(
 )
 
 # API configuration
-API_BASE_URL = "http://localhost:8000"
+import os
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
 
 # CTA Line Colors (official colors) - mapped to actual route names in data
 CTA_LINE_COLORS = {
@@ -537,6 +538,7 @@ def show_live_detection():
                 with st.expander("Technical Details"):
                     st.markdown(f"**Model Used**: {result['model_used']}")
                     st.markdown(f"**Prediction Time**: {result['timestamp']}")
+                    st.markdown(f"**Mock Prediction**: {result.get('mock_prediction', 'Unknown')}")
                     st.json(result['input_features'])
         
         # Quick test buttons

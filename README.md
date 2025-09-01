@@ -43,6 +43,19 @@ This will:
 ./scripts/docker-stop.sh
 ```
 
+### Manage Docker Space
+Docker can use significant disk space (20+ GB is common). Monitor and clean up regularly:
+```bash
+# Check Docker space usage
+docker system df
+
+# Clean up unused Docker data (safe cleanup)
+./scripts/docker-cleanup.sh
+
+# For more aggressive cleanup (removes all unused data)
+docker system prune -a --volumes
+```
+
 ## Features
 
 ### Real-Time Monitoring
@@ -149,8 +162,13 @@ transit_anomaly/
 ├── docs/                            # Documentation
 ├── tests/                           # Test files
 ├── config/                          # Configuration
-│   ├── requirements.txt             # Python dependencies
-│   └── requirements-core.txt        # Core dependencies only
+│   ├── requirements.txt             # All dependencies (local dev)
+│   ├── requirements-core.txt        # Core dependencies
+│   ├── requirements-web.txt         # Web framework dependencies
+│   ├── requirements-ml.txt          # Machine learning dependencies
+│   ├── requirements-viz.txt         # Visualization dependencies
+│   ├── requirements-geo.txt         # Geospatial dependencies
+│   └── requirements-data.txt        # Data access dependencies
 ├── scripts/                         # Utility scripts
 │   ├── docker-start.sh              # Start all services
 │   └── docker-stop.sh               # Stop all services
@@ -163,8 +181,14 @@ transit_anomaly/
 
 ### Local Development
 ```bash
-# Install dependencies
+# Install dependencies (use consolidated file for local development)
 pip install -r config/requirements.txt
+
+# Or install in layers to match Docker approach
+pip install -r config/requirements-core.txt
+pip install -r config/requirements-web.txt
+pip install -r config/requirements-ml.txt
+# ... etc
 
 # Run individual components
 python src/data_collection/fetch_data.py
@@ -174,14 +198,22 @@ streamlit run src/dashboard/dashboard.py
 
 ### Running Tests
 ```bash
+# Test API endpoints
 python tests/test_api.py
+
+# Test Docker setup
 python tests/test_docker.py
+
+# Verify complete system setup
+./scripts/verify-setup.sh
 ```
 
 ### Model Training
 Explore the Jupyter notebooks in `src/notebooks/`:
 - `01-EDA.ipynb` - Exploratory data analysis
 - `02-Modeling.ipynb` - Model development and training
+
+**Note**: If running notebooks from `src/notebooks/` directory, database paths are relative to project root (`../../data/cta_database.db`)
 
 ## Configuration
 
@@ -257,12 +289,37 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Chicago Transit Authority for providing the Train Tracker API
 - Open source community for the excellent tools and libraries used
 
+## Troubleshooting
+
+### Common Issues
+
+**Database Connection Error in Notebooks**
+```python
+# If you get "unable to open database file" in notebooks:
+# Make sure the path is relative to project root
+DB_PATH = "../../data/cta_database.db"  # From src/notebooks/
+```
+
+**API KeyError: 'input_features'**
+- Restart the API container: `docker-compose -f docker/docker-compose.yml restart api`
+- This was fixed in recent updates
+
+**Docker Space Issues**
+- Docker can use 20+ GB of space
+- Run `./scripts/docker-cleanup.sh` regularly
+- Use `docker system df` to monitor usage
+
+**Live Detection Tab Errors**
+- Ensure API is running: `curl http://localhost:8000/health`
+- Check API logs: `docker logs cta-anomaly-api`
+
 ## Support
 
 For questions or issues:
-1. Check the [documentation](docs/)
-2. Review existing [issues](../../issues)
-3. Create a new issue with detailed information
+1. Check the [troubleshooting section](#troubleshooting) above
+2. Check the [documentation](docs/)
+3. Review existing [issues](../../issues)
+4. Create a new issue with detailed information
 
 ---
 

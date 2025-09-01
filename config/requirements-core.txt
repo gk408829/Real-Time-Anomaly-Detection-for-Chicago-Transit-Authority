@@ -1,8 +1,7 @@
-# Core dependencies - install first
-numpy
-pandas
-requests
-python-dotenv
-joblib
-scikit-learn
-lightgbm
+# Core dependencies - install first for better Docker layer caching
+numpy>=1.21.0
+pandas>=1.5.0
+requests>=2.28.0
+python-dotenv>=0.19.0
+joblib>=1.2.0
+scikit-learn>=1.1.0

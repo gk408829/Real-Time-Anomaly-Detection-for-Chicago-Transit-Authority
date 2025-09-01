@@ -44,14 +44,21 @@ case "$1" in
         docker system prune -f
         echo "Cleanup complete."
         ;;
+    "space")
+        echo "Checking Docker disk usage..."
+        docker system df
+        echo ""
+        echo "💡 To free up space, run: ./scripts/docker-cleanup.sh"
+        ;;
     *)
-        echo "Usage: $0 {start|health|stop|logs|clean}"
+        echo "Usage: $0 {start|health|stop|logs|clean|space}"
         echo ""
         echo "  start  - Start the system and test endpoints"
         echo "  health - Check system health and status"
         echo "  stop   - Stop all containers"
         echo "  logs   - Show container logs"
         echo "  clean  - Clean up Docker resources"
+        echo "  space  - Check Docker disk usage"
         exit 1
         ;;
 esac

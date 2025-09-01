@@ -10,6 +10,13 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
+# Check Docker disk usage
+DOCKER_SIZE=$(docker system df --format "{{.Size}}" | head -1 | sed 's/[^0-9.]//g')
+if (( $(echo "$DOCKER_SIZE > 15" | bc -l) )); then
+    echo "⚠️  Warning: Docker is using ${DOCKER_SIZE}GB of disk space"
+    echo "   Consider running ./scripts/docker-cleanup.sh to free up space"
+fi
+
 # Check if models exist
 if [ ! -f "models/best_anomaly_model.pkl" ]; then
     echo "ℹ️  Model file not found. API will run in mock mode."

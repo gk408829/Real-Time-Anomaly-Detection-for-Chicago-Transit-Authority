@@ -1,0 +1,2 @@
+# Data acquisition dependencies
+sqlalchemy>=1.4.0
