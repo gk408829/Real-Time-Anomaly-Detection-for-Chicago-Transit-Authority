@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.34">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>readme</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="README_files/libs/clipboard/clipboard.min.js"></script>
+<script src="README_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="README_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="README_files/libs/quarto-html/popper.min.js"></script>
+<script src="README_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="README_files/libs/quarto-html/anchor.min.js"></script>
+<link href="README_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="README_files/libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="README_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="README_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="README_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="project-plan-enhancing-urban-mobility-a-real-time-anomaly-detection-system-for-the-chicago-train-network" class="level1">
+<h1><strong>PROJECT PLAN: Enhancing Urban Mobility: A Real-Time Anomaly Detection System for the Chicago Train Network</strong></h1>
+</section>
+<section id="introduction" class="level1">
+<h1>1 Introduction</h1>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">1.1 Objective</h2>
+<p>To design, build, and deploy an end-to-end MLOps system that monitors live Chicago Transit Authority (CTA) train data, detects anomalies in real-time using machine learning with rigorous confidence bounds, and visualizes the system’s status on a public-facing dashboard.</p>
+</section>
+<section id="impact" class="level2">
+<h2 class="anchored" data-anchor-id="impact">1.2 Impact</h2>
+<p>This project is impactful because it addresses a critical challenge in urban mobility: ensuring public transportation is reliable and efficient. For millions of commuters, unexpected delays and disruptions can significantly impact their day. While transit agencies report major outages, they often lack the tools to detect subtle, cascading, or emerging issues in real-time.</p>
+<p>By building a real-time anomaly detection system, this project delivers tangible impacts:</p>
+<ol type="1">
+<li><p><strong>For Passengers</strong>: It can power next-generation transit apps that provide smarter alerts. Instead of just saying a train is “delayed,” it could warn users about an “unusual slowdown” on their line before the official delay is announced, allowing them to reroute and save time.</p></li>
+<li><p><strong>For Transit Operators</strong>: A live dashboard highlighting anomalous behavior acts as an early warning system. Operators can see a slowdown developing on a map and proactively investigate the cause—be it a signal issue, a mechanical problem, or overcrowding—potentially preventing a minor issue from becoming a major system-wide failure.</p></li>
+<li><p><strong>For City Planners</strong>: The historical data on anomalies provides a rich dataset for identifying systemic bottlenecks. Planners can use this information to optimize schedules, allocate resources more effectively, and make informed decisions about infrastructure upgrades.</p></li>
+</ol>
+<p>In essence, this project moves beyond simple tracking to provide actionable intelligence, making the transit system more resilient and trustworthy.</p>
+</section>
+<section id="anomaly-detection" class="level2">
+<h2 class="anchored" data-anchor-id="anomaly-detection">1.3 Anomaly Detection</h2>
+<p>Anomaly detection is a machine learning technique used to identify rare items, events, or observations that deviate significantly from the majority of the data. These deviations are often called anomalies, outliers, exceptions, or contaminants.</p>
+<p>At its core, the process involves establishing a clear definition of “normal” behavior based on historical data. The system then monitors new, incoming data and flags any points that do not conform to this established norm.</p>
+<p>For example, in our transit system:</p>
+<ul>
+<li><p><strong>Normal Behavior</strong>: Trains slow down as they approach a station, travel at a consistent speed between stations during off-peak hours, and experience slightly longer travel times during rush hour.</p></li>
+<li><p><strong>Anomalous Behavior</strong>: A train stopping for an extended period between stations, moving significantly slower than usual for that time of day, or deviating from its designated route.</p></li>
+</ul>
+<p>Anomaly detection is a critical tool in many industries, including cybersecurity (detecting network intrusions), finance (flagging fraudulent transactions), and manufacturing (predicting equipment failures).</p>
+</section>
+</section>
+<section id="related-works" class="level1">
+<h1>2 Related Works</h1>
+<p>The task of detecting anomalies in transportation systems has been an active area of research, evolving from statistical methods to complex deep learning architectures.</p>
+<p>Early research often focused on statistical and classical time-series models. For instance, methods like ARIMA (Autoregressive Integrated Moving Average) were used to forecast passenger flow or travel times, with significant deviations from the forecast being flagged as anomalies (Williams &amp; Hoel, 2003). While effective for capturing regular, seasonal patterns, these models often struggle with the complex, non-linear dynamics of a real-world transit system.</p>
+<p>With the rise of machine learning, tree-based models like Isolation Forest and clustering algorithms like DBSCAN became popular. These methods are effective at identifying outliers in large, multi-dimensional datasets without needing to model the temporal sequence explicitly. For example, research has shown success in using these techniques to detect anomalous bus trajectories or unusual passenger ticketing patterns (Liu, Ting, &amp; Zhou, 2008). However, they can sometimes miss context-dependent anomalies that are only apparent when viewed as part of a sequence.</p>
+<p>More recently, the field has been dominated by deep learning, particularly Recurrent Neural Networks (RNNs) like LSTMs and GRUs. These models excel at learning patterns from sequential data, making them a natural fit for vehicle GPS traces. A systematic literature review on anomaly detection in connected vehicles highlighted that LSTMs, CNNs, and Autoencoders are the most commonly used deep learning techniques (Saleh, et al., 2024). They are often trained to predict a vehicle’s future state (e.g., location or speed), and a large error between the prediction and reality signals an anomaly. This approach effectively captures the spatiotemporal nature of the problem.</p>
+<p>Current research is pushing towards even more sophisticated models and addressing key limitations. This includes using Graph Neural Networks (GNNs) to model the entire transit network as a graph and exploring Transformer-based architectures to capture long-range dependencies. Furthermore, there is a growing emphasis on explainability and real-time performance, ensuring that detection systems are not only accurate but also interpretable and fast enough for real-world operational use.</p>
+</section>
+<section id="project-timeline" class="level1">
+<h1>3 Project Timeline</h1>
+<p>This timeline provides an ambitious but achievable weekly breakdown for completing the project.</p>
+<ul>
+<li><p><strong>Week 1: Foundation &amp; Data Collection</strong></p>
+<ul>
+<li><p>Focus: Establishing the project’s technical foundation and data pipeline.</p></li>
+<li><p>Process: This week is dedicated to environment setup and building the core data ingestion script. The primary process involves obtaining API credentials, defining a robust database schema in SQLite, and developing a resilient Python script that can run continuously to poll the CTA API. Error handling and logging are critical components. The week concludes with launching the script to begin accumulating a rich historical dataset.</p></li>
+<li><p>Outcome: A stable, automated <code>fetch_data.py</code> script and a growing SQLite database with at least 50,000 rows of clean, structured train data.</p></li>
+</ul></li>
+<li><p><strong>Week 2: Analysis &amp; Baseline</strong></p>
+<ul>
+<li><p>Focus: Deep data understanding and establishing a performance benchmark.</p></li>
+<li><p>Process: We transition from data collection to analysis. The main activities involve a comprehensive exploration of the dataset’s temporal and spatial characteristics within a Jupyter Notebook. This analysis will directly inform our first anomaly detection model—a context-aware Z-score baseline. This baseline is critical as it provides the first tangible results and a benchmark against which all future, more complex models will be measured.</p></li>
+<li><p>Outcome: A detailed EDA notebook (<code>01-EDA.ipynb</code>) with key visualizations (including GeoPandas maps) and a documented Z-score model that successfully identifies initial anomalies.</p></li>
+</ul></li>
+<li><p><strong>Week 3: Preprocessing &amp; First Advanced Model</strong></p>
+<ul>
+<li><p>Focus: Building a machine learning-ready dataset and training a powerful baseline model.</p></li>
+<li><p>Process: This week is about formalizing the data preparation process. We will build a reusable preprocessing pipeline that handles missing values, encodes categorical variables, and scales numerical features. This pipeline will then be used to prepare data for our first advanced model, LightGBM. We will set up MLflow to rigorously track this experiment, logging parameters and performance metrics.</p></li>
+<li><p>Outcome: A clean, well-documented modeling notebook (<code>02-Modeling.ipynb</code>), a trained LightGBM model artifact, and the initial MLflow experiment logs.</p></li>
+</ul></li>
+<li><p><strong>Week 4: API Development &amp; Containerization</strong></p>
+<ul>
+<li><p>Focus: Transforming the trained model into a portable, production-ready service.</p></li>
+<li><p>Process: The focus shifts from data science to software engineering. We will build a FastAPI application to serve our trained LightGBM model. This involves creating a <code>/predict</code> endpoint that encapsulates the entire prediction logic. The entire application, including all dependencies and the model artifact, will then be containerized using Docker. The week ends with thorough local testing of the Docker container.</p></li>
+<li><p>Outcome: A fully functional, containerized FastAPI service that can serve predictions locally.</p></li>
+</ul></li>
+<li><p><strong>Week 5: Initial Deployment &amp; Dashboard (Vertical Slice)</strong></p>
+<ul>
+<li><p>Focus: Achieving a full end-to-end, publicly accessible version of the system.</p></li>
+<li><p>Process: This is a critical integration week. The Docker image will be pushed to a container registry (Docker Hub) and deployed to Google Cloud Run, making our API live. Concurrently, we will develop a Streamlit dashboard that consumes this live API. The goal is to create a simple but functional user interface that displays live train data on a map and highlights anomalies.</p></li>
+<li><p>Outcome: A live API endpoint and a deployed Streamlit dashboard, representing the first complete, demonstrable version of the project.</p></li>
+</ul></li>
+<li><p><strong>Week 6: Advanced Modeling &amp; Conformal Prediction</strong></p>
+<ul>
+<li><p>Focus: Improving predictive accuracy and adding statistical rigor.</p></li>
+<li><p>Process: With the core infrastructure in place, we return to modeling. We will train a more complex, sequence-aware model like an LSTM and compare its performance against the LightGBM baseline in MLflow. The superior model will be selected. The second half of the week involves upgrading the FastAPI service to integrate this new model and implement the conformal prediction logic, providing statistically valid p-values for each anomaly.</p></li>
+<li><p>Outcome: An updated API running the best-performing model, now with the added capability of providing confidence scores for its predictions.</p></li>
+</ul></li>
+<li><p><strong>Week 7: Automation (CI/CD)</strong></p>
+<ul>
+<li><p>Focus: Automating the testing and deployment workflow.</p></li>
+<li><p>Process: This week is dedicated to implementing MLOps best practices. We will write unit tests for our data processing and API logic. Then, we will build a GitHub Actions workflow that automatically runs these tests, builds the Docker image, and deploys it to Google Cloud Run whenever changes are pushed to the main branch. This eliminates manual deployment steps and ensures reliability.</p></li>
+<li><p>Outcome: A CI/CD pipeline that automates the entire deployment process.</p></li>
+</ul></li>
+<li><p><strong>Week 8: Monitoring &amp; Final Polish</strong></p>
+<ul>
+<li><p>Focus: Ensuring long-term reliability and preparing the project for presentation.</p></li>
+<li><p>Process: The final week involves setting up a monitoring stack. We will instrument the API with Prometheus metrics and use Grafana to build two dashboards: one for service health (latency, errors) and another for model performance (conformal prediction coverage, false alarm rate). The remaining time will be spent on writing comprehensive documentation, including a system architecture diagram in the <code>README.md</code>.</p></li>
+<li><p>Outcome: A fully monitored system and a professional, well-documented GitHub repository ready to be shared.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="technical-specifications-dependencies" class="level1">
+<h1>4 Technical Specifications &amp; Dependencies</h1>
+<section id="environment-configuration" class="level2">
+<h2 class="anchored" data-anchor-id="environment-configuration">4.1 Environment Configuration</h2>
+<ul>
+<li><p>Environment Manager: <code>Conda</code></p></li>
+<li><p>Environment Name: <code>transit_anomaly</code></p></li>
+<li><p>Python Version: <code>3.10</code></p></li>
+</ul>
+</section>
+<section id="core-dependencies-requirements.txt" class="level2">
+<h2 class="anchored" data-anchor-id="core-dependencies-requirements.txt">4.2 Core Dependencies (<code>requirements.txt</code>)</h2>
+<pre><code>    # --- Core Data Science &amp; EDA ---
+    pandas
+    numpy
+    jupyterlab
+    matplotlib
+    seaborn
+    scikit-learn
+
+    # --- Geospatial Analysis ---
+    geopandas
+    shapely
+
+    # --- Data Acquisition &amp; Storage ---
+    requests
+    python-dotenv
+    sqlalchemy
+    # Note: sqlite3 is built into Python
+
+    # --- ML Modeling &amp; Experiment Tracking ---
+    tensorflow
+    mlflow
+    lightgbm
+    statsmodels # For ARIMA baseline
+    # transformers # Optional, for advanced modeling
+
+    # --- Advanced ML ---
+    # For Conformal Prediction
+    mapie
+
+    # --- Backend API Server ---
+    fastapi
+    uvicorn[standard]
+
+    # --- Frontend Dashboard ---
+    streamlit
+    folium
+
+    # --- Infrastructure &amp; Deployment ---
+    # These are installed separately, not via pip
+    # Docker
+    # Docker Compose</code></pre>
+</section>
+<section id="external-services-apis" class="level2">
+<h2 class="anchored" data-anchor-id="external-services-apis">4.3 External Services &amp; APIs</h2>
+<ul>
+<li><p>Data Source: Chicago Transit Authority (CTA) Train Tracker API</p></li>
+<li><p>Cloud Deployment: Google Cloud Run (Primary) or AWS App Runner (Alternative)</p></li>
+<li><p>Dashboard Hosting: Streamlit Cloud (Free)</p></li>
+<li><p>Container Registry: Docker Hub</p></li>
+</ul>
+</section>
+</section>
+<section id="project-phases" class="level1">
+<h1>5 Project Phases</h1>
+<section id="phase-1-data-ingestion-storage" class="level2">
+<h2 class="anchored" data-anchor-id="phase-1-data-ingestion-storage">Phase 1: Data Ingestion &amp; Storage</h2>
+<ul>
+<li><p><strong>Goal</strong>: Establish a reliable, automated pipeline to collect and store live CTA train data.</p></li>
+<li><p><strong>Tasks</strong>:</p>
+<ol type="1">
+<li><p>API Access: Obtain a CTA Train Tracker API key.</p></li>
+<li><p>Data Collection Script (<code>fetch_data.py</code>): Develop a Python script to poll the ttpositions.aspx endpoint every 60 seconds. Implement a robust loop with error handling and logging.</p></li>
+<li><p>Database Schema: Create a local SQLite database (<code>cta_database.db</code>) with a clearly defined <code>train_positions</code> table.</p></li>
+<li><p>Data Parsing and Storage: Parse the incoming JSON, convert timestamps to Unix format, and write the cleaned records to the SQLite database.</p></li>
+<li><p>Initial Data Collection: Run the script in several multi-hour sessions to collect an initial dataset of at least 50,000-100,000 rows.</p></li>
+</ol></li>
+<li><p><strong>Deliverable</strong>: A Python script that continuously logs live train data into a structured, local SQLite database.</p></li>
+</ul>
+</section>
+<section id="phase-2-exploratory-data-analysis-eda-baseline-modeling" class="level2">
+<h2 class="anchored" data-anchor-id="phase-2-exploratory-data-analysis-eda-baseline-modeling">Phase 2: Exploratory Data Analysis (EDA) &amp; Baseline Modeling</h2>
+<ul>
+<li><p><strong>Goal</strong>: Understand the dataset’s characteristics and establish a simple, statistics-based baseline for detecting point anomalies.</p></li>
+<li><p><strong>Tasks</strong>:</p>
+<ol type="1">
+<li><p>Analysis Environment: Create a Jupyter Notebook (<code>01-EDA.ipynb</code>).</p></li>
+<li><p>Data Loading &amp; Analysis: Load data from SQLite. Perform temporal and spatial analysis, visualizing train patterns and locations using GeoPandas.</p></li>
+<li><p>Feature Engineering: Calculate train speed (<code>speed_kmh</code>) using the Haversine distance.</p></li>
+<li><p>Baseline Model (Z-Score): Implement a context-aware Z-score model on <code>speed_kmh</code>, grouped by <code>hour_of_day</code>.</p></li>
+</ol></li>
+<li><p><strong>Deliverable</strong>: A Jupyter Notebook containing a comprehensive analysis of the data and a working Z-score baseline model.</p></li>
+</ul>
+</section>
+<section id="phase-3-data-preprocessing-advanced-modeling" class="level2">
+<h2 class="anchored" data-anchor-id="phase-3-data-preprocessing-advanced-modeling">Phase 3: Data Preprocessing &amp; Advanced Modeling</h2>
+<ul>
+<li><p><strong>Goal</strong>: Prepare the data for machine learning and train a sophisticated, interpretable model to detect “Gray Swan” collective anomalies.</p></li>
+<li><p><strong>Tasks</strong>:</p>
+<ol type="1">
+<li><p>Preprocessing Pipeline: Handle missing values, one-hot encode categorical features, and scale numerical features.</p></li>
+<li><p>Advanced Feature Engineering: Engineer features that capture historical delays and create time-series sequences using a sliding window approach.</p></li>
+<li><p>Model Selection &amp; Training:</p>
+<ul>
+<li><p>Target Variable: Define a clear target, such as <code>speed_kmh</code> or <code>arrival_delay_seconds</code>.</p></li>
+<li><p>Model Candidates: ARIMA, LightGBM, LSTM/GRU (primary candidate for collective anomalies), Transformer.</p></li>
+</ul></li>
+<li><p>Experiment Tracking: Use MLflow to log experiments, compare the performance of different models, and save the best-performing model artifact.</p></li>
+<li><p>Model Interpretation: Use SHAP to analyze the trained models. Generate global feature importance plots to understand the key drivers of predictions and analyze individual predictions to ensure the model’s logic is sound.</p></li>
+</ol></li>
+<li><p><strong>Deliverable</strong>: A trained model file, an MLflow experiment log, and SHAP analysis plots.</p></li>
+</ul>
+</section>
+<section id="phase-4-backend-api-with-conformal-prediction-explainability" class="level2">
+<h2 class="anchored" data-anchor-id="phase-4-backend-api-with-conformal-prediction-explainability">Phase 4: Backend API with Conformal Prediction &amp; Explainability</h2>
+<ul>
+<li><p><strong>Goal</strong>: Expose the model as a service that provides explainable predictions with rigorous confidence bounds.</p></li>
+<li><p><strong>Tasks</strong>:</p>
+<ol type="1">
+<li><p>API Development: Build a FastAPI application.</p></li>
+<li><p>Prediction Logic: Implement the logic to generate predictions, SHAP values for individual requests, and conformal prediction scores.</p></li>
+<li><p>Online Adaptation: Maintain a rolling calibration buffer for the conformal predictor.</p></li>
+<li><p>API Endpoints: Create a <code>/predict</code> endpoint that returns a JSON object:</p></li>
+</ol>
+<pre><code>{
+    "is_anomaly": true, 
+    "p_value": 0.02, 
+    "severity_score": 0.98, 
+    "explanation": {
+        "feature1": 0.5, 
+        "feature2": -0.2
+        }
+}.</code></pre>
+<ol start="5" type="1">
+<li>Containerization: Write a <code>Dockerfile</code> to package the application.</li>
+</ol></li>
+<li><p><strong>Deliverable</strong>: A runnable Docker image that serves explainable, confidence-scored predictions.</p></li>
+</ul>
+</section>
+<section id="phase-5-cloud-deployment-automation" class="level2">
+<h2 class="anchored" data-anchor-id="phase-5-cloud-deployment-automation">Phase 5: Cloud Deployment &amp; Automation</h2>
+<ul>
+<li><p>Goal: Deploy the service to the cloud and automate the data pipeline.</p></li>
+<li><p>Tasks:</p>
+<ol type="1">
+<li><p>Container Registry: Push the Docker image to Docker Hub.</p></li>
+<li><p>Cloud Deployment Strategy:</p>
+<ul>
+<li><p>Primary Option (Google Cloud Run): Deploy the container to Google Cloud Run. This is the recommended approach due to its simplicity, generous free tier, and fully managed, serverless nature. It scales to zero, ensuring minimal cost.</p></li>
+<li><p>Alternative Option (AWS App Runner): As a direct equivalent, AWS App Runner offers similar container-based, serverless deployment with a free tier. This is a strong alternative if you prefer the AWS ecosystem.</p></li>
+</ul></li>
+<li><p>(Optional) Workflow Orchestration: Set up a Prefect workflow to automate the entire pipeline.</p></li>
+</ol></li>
+<li><p><strong>Deliverable</strong>: A live, public API endpoint that can provide real-time anomaly predictions with severity scores.</p></li>
+</ul>
+</section>
+<section id="phase-6-interactive-dashboard" class="level2">
+<h2 class="anchored" data-anchor-id="phase-6-interactive-dashboard">Phase 6: Interactive Dashboard</h2>
+<ul>
+<li><p>Goal: Create a user-friendly, visual frontend for the system.</p></li>
+<li><p>Tasks:</p>
+<ol type="1">
+<li><p>UI Development: Build a Streamlit web application.</p></li>
+<li><p>API Integration &amp; Visualization: The app will call the live FastAPI endpoint and use Folium to display a map with train positions color-coded by anomaly severity.</p></li>
+<li><p>Display Explanations: When a user clicks on an anomalous train, display a simple chart or text showing the top features that contributed to the anomaly flag (e.g., “Flagged due to: High speed, Low historical delay”).</p></li>
+<li><p>Dashboard Hosting: Deploy the application for free on Streamlit Cloud.</p></li>
+</ol></li>
+<li><p>Deliverable: A public URL to an interactive dashboard showing real-time train anomalies and their explanations.</p></li>
+</ul>
+</section>
+<section id="phase-7-phase-7-advanced-mlops-diagnostics" class="level2">
+<h2 class="anchored" data-anchor-id="phase-7-phase-7-advanced-mlops-diagnostics">Phase 7: Phase 7: Advanced MLOps &amp; Diagnostics</h2>
+<ul>
+<li><p>Goal: Add production-grade features to demonstrate a deep understanding of the MLOps lifecycle.</p></li>
+<li><p>Tasks:</p>
+<ol type="1">
+<li><p>CI/CD Pipeline: Create GitHub Actions workflows to automate testing and deployment.</p></li>
+<li><p>Service Monitoring: Set up Prometheus and Grafana to monitor the API’s health (latency, error rate).</p></li>
+<li><p>Model Monitoring: Create a specific Grafana dashboard to track the conformal predictor’s Coverage Rate and the system’s False Alarm Rate.</p></li>
+<li><p>Causal Inference Module (Stretch Goal): Develop a post-detection module that attempts to infer the root cause of a flagged anomaly. A simple implementation could involve a graph-based check: after detecting an anomaly on one train, the system queries the status of nearby trains. If multiple trains are anomalous, it suggests a network-wide issue (e.g., weather); if the anomaly is isolated, it suggests a local issue (e.g., mechanical problem).</p></li>
+</ol></li>
+<li><p>Deliverable: A professional, production-style GitHub repository with automated workflows, advanced monitoring, and diagnostic capabilities.</p></li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

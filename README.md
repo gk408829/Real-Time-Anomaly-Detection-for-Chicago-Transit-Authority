@@ -179,3 +179,142 @@ This timeline provides an ambitious but achievable weekly breakdown for completi
 * Container Registry: Docker Hub
 
 # 5 Project Phases
+
+## Phase 1: Data Ingestion & Storage
+
+* **Goal**: Establish a reliable, automated pipeline to collect and store live CTA train data.
+
+* **Tasks**:
+
+    1. API Access: Obtain a CTA Train Tracker API key.
+
+    2. Data Collection Script (`fetch_data.py`): Develop a Python script to poll the ttpositions.aspx endpoint every 60 seconds. Implement a robust loop with error handling and logging. 
+
+    3. Database Schema: Create a local SQLite database (`cta_database.db`) with a clearly defined `train_positions` table.
+
+    4. Data Parsing and Storage: Parse the incoming JSON, convert timestamps to Unix format, and write the cleaned records to the SQLite database.
+
+    5. Initial Data Collection: Run the script in several multi-hour sessions to collect an initial dataset of at least 50,000-100,000 rows.
+
+* **Deliverable**: A Python script that continuously logs live train data into a structured, local SQLite database.
+
+## Phase 2: Exploratory Data Analysis (EDA) & Baseline Modeling
+
+* **Goal**: Understand the dataset's characteristics and establish a simple, statistics-based baseline for detecting point anomalies.
+
+* **Tasks**:
+
+    1. Analysis Environment: Create a Jupyter Notebook (`01-EDA.ipynb`).
+
+    2. Data Loading & Analysis: Load data from SQLite. Perform temporal and spatial analysis, visualizing train patterns and locations using GeoPandas.
+
+    3. Feature Engineering: Calculate train speed (`speed_kmh`) using the Haversine distance.
+
+    4. Baseline Model (Z-Score): Implement a context-aware Z-score model on `speed_kmh`, grouped by `hour_of_day`.
+
+* **Deliverable**: A Jupyter Notebook containing a comprehensive analysis of the data and a working Z-score baseline model.
+
+## Phase 3: Data Preprocessing & Advanced Modeling
+
+* **Goal**: Prepare the data for machine learning and train a sophisticated, interpretable model to detect "Gray Swan" collective anomalies.
+
+* **Tasks**:
+
+    1. Preprocessing Pipeline: Handle missing values, one-hot encode categorical features, and scale numerical features.
+
+    2. Advanced Feature Engineering: Engineer features that capture historical delays and create time-series sequences using a sliding window approach.
+
+    3. Model Selection & Training:
+
+        - Target Variable: Define a clear target, such as `speed_kmh` or `arrival_delay_seconds`.
+
+        - Model Candidates: ARIMA, LightGBM, LSTM/GRU (primary candidate for collective anomalies), Transformer.
+
+    4. Experiment Tracking: Use MLflow to log experiments, compare the performance of different models, and save the best-performing model artifact.
+
+    5. Model Interpretation: Use SHAP to analyze the trained models. Generate global feature importance plots to understand the key drivers of predictions and analyze individual predictions to ensure the model's logic is sound.
+
+* **Deliverable**: A trained model file, an MLflow experiment log, and SHAP analysis plots.
+
+## Phase 4: Backend API with Conformal Prediction & Explainability
+
+* **Goal**: Expose the model as a service that provides explainable predictions with rigorous confidence bounds.
+
+* **Tasks**:
+
+    1. API Development: Build a FastAPI application.
+
+    2. Prediction Logic: Implement the logic to generate predictions, SHAP values for individual requests, and conformal prediction scores.
+
+    3. Online Adaptation: Maintain a rolling calibration buffer for the conformal predictor.
+
+    4. API Endpoints: Create a `/predict` endpoint that returns a JSON object: 
+    ```
+    {
+        "is_anomaly": true, 
+        "p_value": 0.02, 
+        "severity_score": 0.98, 
+        "explanation": {
+            "feature1": 0.5, 
+            "feature2": -0.2
+            }
+    }.
+    ```
+
+    5. Containerization: Write a `Dockerfile` to package the application.
+
+* **Deliverable**: A runnable Docker image that serves explainable, confidence-scored predictions.
+
+## Phase 5: Cloud Deployment & Automation
+
+* Goal: Deploy the service to the cloud and automate the data pipeline.
+
+* Tasks:
+
+    1. Container Registry: Push the Docker image to Docker Hub.
+
+    2. Cloud Deployment Strategy:
+
+        - Primary Option (Google Cloud Run): Deploy the container to Google Cloud Run. This is the recommended approach due to its simplicity, generous free tier, and fully managed, serverless nature. It scales to zero, ensuring minimal cost.
+
+        - Alternative Option (AWS App Runner): As a direct equivalent, AWS App Runner offers similar container-based, serverless deployment with a free tier. This is a strong alternative if you prefer the AWS ecosystem.
+
+    3. (Optional) Workflow Orchestration: Set up a Prefect workflow to automate the entire pipeline.
+
+* **Deliverable**: A live, public API endpoint that can provide real-time anomaly predictions with severity scores.
+
+## Phase 6: Interactive Dashboard
+
+* Goal: Create a user-friendly, visual frontend for the system.
+
+* Tasks:
+
+    1. UI Development: Build a Streamlit web application.
+
+    2. API Integration & Visualization: The app will call the live FastAPI endpoint and use Folium to display a map with train positions color-coded by anomaly severity.
+
+    3. Display Explanations: When a user clicks on an anomalous train, display a simple chart or text showing the top features that contributed to the anomaly flag (e.g., "Flagged due to: High speed, Low historical delay").
+
+    4. Dashboard Hosting: Deploy the application for free on Streamlit Cloud.
+
+* Deliverable: A public URL to an interactive dashboard showing real-time train anomalies and their explanations.
+
+## Phase 7: Phase 7: Advanced MLOps & Diagnostics
+
+* Goal: Add production-grade features to demonstrate a deep understanding of the MLOps lifecycle.
+
+* Tasks:
+
+    1. CI/CD Pipeline: Create GitHub Actions workflows to automate testing and deployment.
+
+    2. Service Monitoring: Set up Prometheus and Grafana to monitor the API's health (latency, error rate).
+
+    3. Model Monitoring: Create a specific Grafana dashboard to track the conformal predictor's Coverage Rate and the system's False Alarm Rate.
+
+    4. Causal Inference Module (Stretch Goal): Develop a post-detection module that attempts to infer the root cause of a flagged anomaly. A simple implementation could involve a graph-based check: after detecting an anomaly on one train, the system queries the status of nearby trains. If multiple trains are anomalous, it suggests a network-wide issue (e.g., weather); if the anomaly is isolated, it suggests a local issue (e.g., mechanical problem).
+
+* Deliverable: A professional, production-style GitHub repository with automated workflows, advanced monitoring, and diagnostic capabilities.
+
+
+
+
