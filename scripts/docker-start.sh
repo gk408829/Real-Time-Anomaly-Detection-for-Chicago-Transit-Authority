@@ -13,7 +13,7 @@ fi
 # Check if models exist
 if [ ! -f "models/best_anomaly_model.pkl" ]; then
     echo "Warning: Model file not found. You may need to train the model first."
-    echo "   Run the modeling notebook (02-Modeling-v2.ipynb) to create the model."
+    echo "   Run the modeling notebook (02-Modeling.ipynb) to create the model."
 fi
 
 # Check if database exists

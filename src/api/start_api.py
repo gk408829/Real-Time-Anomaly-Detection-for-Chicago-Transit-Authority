@@ -15,7 +15,7 @@ def check_model_exists():
     if not model_path.exists():
         print("ERROR: Model file not found!")
         print(f"Expected location: {model_path.absolute()}")
-        print("\nPlease run the modeling notebook (02-Modeling-v2.ipynb) first to train and save the model.")
+        print("\nPlease run the modeling notebook (02-Modeling.ipynb) first to train and save the model.")
         return False
     
     print(f"Model found: {model_path.absolute()}")

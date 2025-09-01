@@ -20,7 +20,7 @@ The system provides both an API for programmatic access and a web dashboard for 
 
 ### One-Command Setup
 ```bash
-./start.sh
+./scripts/docker-start.sh
 ```
 
 This will:
@@ -148,7 +148,7 @@ pip install -r config/requirements.txt
 
 # Run individual components
 python src/data_collection/fetch_data.py
-python src/api/app.py
+python src/api/start_api.py
 streamlit run src/dashboard/dashboard.py
 ```
 
@@ -209,7 +209,6 @@ The system is designed for easy deployment to:
 ## Documentation
 
 - [Docker Setup Guide](docs/DOCKER_SETUP.md) - Detailed Docker configuration
-- [Project Structure](docs/PROJECT_STRUCTURE.md) - Architecture overview
 - [Project Plan](PROJECT_PLAN.md) - Original project specification
 
 ## Contributing

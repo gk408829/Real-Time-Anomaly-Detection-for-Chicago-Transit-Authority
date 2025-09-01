@@ -10,8 +10,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./data:/app/data
-      - ./models:/app/models
+      - ../data:/app/data
+      - ../models:/app/models
     environment:
       - PYTHONPATH=/app
     command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
@@ -32,8 +32,8 @@ services:
     ports:
       - "8501:8501"
     volumes:
-      - ./data:/app/data
-      - ./models:/app/models
+      - ../data:/app/data
+      - ../models:/app/models
     environment:
       - PYTHONPATH=/app
       - API_BASE_URL=http://api:8000
@@ -50,7 +50,7 @@ services:
       dockerfile: docker/Dockerfile
     container_name: cta-data-collector
     volumes:
-      - ./data:/app/data
+      - ../data:/app/data
     environment:
       - PYTHONPATH=/app
     command: ["python", "fetch_data.py"]
