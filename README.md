@@ -110,10 +110,10 @@ graph TB
     NGINX --> DASH
     
     %% Styling
-    classDef service fill:#e1f5fe
-    classDef data fill:#f3e5f5
-    classDef infra fill:#e8f5e8
-    classDef external fill:#fff3e0
+    classDef service fill:#2196F3,stroke:#1976D2,stroke-width:2px,color:#fff
+    classDef data fill:#9C27B0,stroke:#7B1FA2,stroke-width:2px,color:#fff
+    classDef infra fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff
+    classDef external fill:#FF9800,stroke:#F57C00,stroke-width:2px,color:#fff
     
     class DC,API,DASH service
     class CTA,DB,Models data
