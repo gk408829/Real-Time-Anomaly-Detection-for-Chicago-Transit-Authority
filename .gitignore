@@ -201,3 +201,4 @@ models/checkpoints/*
 # Optional: Uncomment to ignore geo data and write-ups
 # geo_data/
 # write-ups/
+.env
