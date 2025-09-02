@@ -1,0 +1,13 @@
+input_size: 7
+hidden_size: 64
+num_layers: 2
+dropout: 0.2
+learning_rate: 0.001
+sequence_length: 10
+device_config:
+  accelerator: mps
+  devices: 1
+  precision: 32
+  batch_size_multiplier: 1.5
+  num_workers: 2
+  device_name: Apple Silicon (MPS)
