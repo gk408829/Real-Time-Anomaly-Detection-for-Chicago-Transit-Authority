@@ -10,9 +10,6 @@
 
 ## Introduction
 
-
-## Introduction
-
 A real-time anomaly detection system for the Chicago Transit Authority (CTA) train network that monitors live train data, detects unusual patterns using machine learning, and provides an interactive dashboard for visualization.
 
 ## What It Does
