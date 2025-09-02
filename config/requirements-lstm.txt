@@ -1,0 +1,9 @@
+# PyTorch Lightning LSTM Dependencies - CPU Version
+# For specific hardware acceleration, use requirements-lstm-{device}.txt
+
+torch>=1.13.0
+pytorch-lightning>=1.8.0
+torchmetrics>=0.10.0
+
+# Additional utilities for LSTM training
+tensorboard>=2.10.0  # For logging

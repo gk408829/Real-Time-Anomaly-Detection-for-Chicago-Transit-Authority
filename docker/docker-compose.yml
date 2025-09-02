@@ -51,6 +51,7 @@ services:
       - ../data:/app/data
     environment:
       - PYTHONPATH=/app
+      - CTA_API_KEY=16ebdd48c00248a7ac3f9329a68dc4d6
     command: ["python", "src/data_collection/fetch_data.py"]
     restart: "no"
     profiles:

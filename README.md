@@ -64,8 +64,9 @@ docker system prune -a --volumes
 - Historical data storage and analysis
 
 ### Machine Learning
-- Multiple anomaly detection models (Z-score baseline, LightGBM, LSTM)
-- Conformal prediction for statistical confidence bounds
+- **LightGBM**: Feature-based anomaly detection (currently deployed)
+- **LSTM**: Sequence-based anomaly detection with PyTorch Lightning (optional)
+- **Hardware Optimization**: Automatic detection and optimization for Apple Silicon (MPS), NVIDIA GPUs (CUDA), and CPU
 - Feature engineering for temporal and spatial patterns
 
 ### Interactive Dashboard
@@ -242,12 +243,32 @@ PYTHONPATH=/path/to/transit_anomaly
 
 The system uses multiple anomaly detection approaches:
 
-1. **Statistical Baseline**: Context-aware Z-score analysis
-2. **Machine Learning**: LightGBM for feature-based detection
-3. **Deep Learning**: LSTM for sequence-based anomalies
-4. **Conformal Prediction**: Statistical confidence bounds
+1. **Machine Learning**: LightGBM for feature-based detection (deployed)
+2. **Deep Learning**: LSTM for sequence-based anomalies (optional, hardware-optimized)
+   - **Apple Silicon**: Optimized for MPS acceleration on M1/M2/M3 Macs
+   - **NVIDIA GPUs**: CUDA acceleration with mixed precision training
+   - **CPU**: Lightweight fallback for any system
 
 Performance metrics are tracked using MLflow and displayed in the dashboard.
+
+### LSTM Training (Optional)
+
+```bash
+# Automatic hardware detection and optimization
+pip install -r config/requirements-lstm-mps.txt  # For Apple Silicon
+# OR
+pip install -r config/requirements-lstm-cuda.txt # For NVIDIA GPUs
+# OR  
+pip install -r config/requirements-lstm.txt      # For CPU
+
+# Train LSTM model (auto-detects your hardware)
+python scripts/train_lstm.py
+
+# Test LSTM implementation
+python tests/test_lstm.py
+```
+
+See [LSTM Installation Guide](docs/LSTM_INSTALLATION.md) for detailed setup instructions.
 
 ## Deployment
 
